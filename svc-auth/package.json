@@ -1,0 +1,11 @@
+{
+  "name": "svc-auth",
+  "version": "1.0.0",
+  "description": "Simple auth service using JWT ",
+  "main": "main.js",
+  "author": "Dani Prasetya",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

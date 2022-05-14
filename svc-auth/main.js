@@ -29,6 +29,7 @@ app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//Assign general response formatter middleware
 app.use(generalMiddleware);
 
 // Swagger Settings
@@ -36,9 +37,10 @@ const swaggerUi = require('swagger-ui-express');
 const openApiDocumentation = require('./swagger.json');
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
+//Registering All Service Route
 apiRouter(app);
 
-// catch 404 and forward to error controller
+//Handling error for unregistered endpoint
 app.use(function (req, res, next) {
     next(createError(404));
 });

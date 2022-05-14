@@ -1,0 +1,255 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Auth App",
+        "version": "1.0.0",
+        "description": "This is a API Specs for Auth App made with Express and documented with Swagger",
+        "contact": {
+            "name": "Dani Prasetya",
+            "email": "dani.prasetya.dev@gmail.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Local"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "summary": "Register User",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User created!"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/RegisterRes"
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": "User created!"
+                    }
+                }
+            }
+        },
+        "/signin": {
+            "post": {
+                "summary": "Signin User",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SigninReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User Authenticated!"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/SigninRes"
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": "User successfully authenticated "
+                    }
+                }
+            }
+        },
+        "/profile": {
+            "get": {
+                "summary": "Profile User",
+                "tags": [
+                    "Auth"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ProfileDetailRes"
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Returning embedded data profile inside jwt"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "RegisterReq": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "rambo_kriting"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Dani Prasetya"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "082312345678"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "super-admin"
+                    }
+                }
+            },
+            "RegisterRes": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "example": "fd9b9d4363524bf4bb8a5ebc7fcb2c12"
+                    },
+                    "username": {
+                        "type": "string",
+                        "example": "rambo_kriting"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Dani Prasetya"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "123456789"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "super-admin"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "ZA10"
+                    }
+                }
+            },
+            "SigninReq": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "example": "082312345678"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "lalayeye"
+                    }
+                }
+            },
+            "SigninRes": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....."
+                    }
+                }
+            },
+            "ProfileDetailRes": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "rambo_kriting"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "123456789"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "super-admin"
+                    },
+                    "timestamp": {
+                        "type": "integer",
+                        "example": 45234523453
+                    },
+                    "iat": {
+                        "type": "integer",
+                        "example": 45234523453
+                    },
+                    "exp": {
+                        "type": "integer",
+                        "example": 45234523453
+                    }
+                }
+            }
+        }
+    }
+}

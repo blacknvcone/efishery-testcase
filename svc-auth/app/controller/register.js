@@ -1,7 +1,7 @@
 `use_strict`;
 
 const UserRepository = require("../repository/user");
-const validator = require("../helper/validator");
+const Validator = require("../helper/validator");
 const randomstring = require("randomstring");
 
 class RegisterController {
@@ -16,7 +16,7 @@ class RegisterController {
         const required = [
             'username', "name", "phone", "role"
         ]
-        let err = validator.validateBody(req.body, required)
+        let err = Validator.validateBody(req.body, required)
 
         if (err) {
             return res.sendError(err)

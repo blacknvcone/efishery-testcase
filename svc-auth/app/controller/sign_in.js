@@ -26,9 +26,8 @@ class SignInController {
         //Validate Data
         let resval = await this.UserRepository.GetByPhonePass(req.body.phone, req.body.password);
         if (resval.length > 0) {
-
             let now = new Date().getTime();
-            let jwt = this.JWTLibrary.GenerateToken(resval, now);
+            let jwt = this.JWTLibrary.GenerateToken(resval[0], now);
 
             return res.sendSuccess({
                 "token": jwt

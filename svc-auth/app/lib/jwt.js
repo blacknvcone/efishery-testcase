@@ -17,6 +17,7 @@ class JWTLibrary {
             role: user.role,
             timestamp: now
         };
+
         return jwt.sign(payload, this.secret, {
             expiresIn: '1h'
         });

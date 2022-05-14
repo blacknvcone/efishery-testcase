@@ -1,0 +1,2 @@
+{"level":"info","ts":1652523909.6423318,"caller":"logger/logger.go:52","msg":"[invalid character '<' looking for beginning of value]"}
+{"level":"info","ts":1652524203.9556005,"caller":"logger/logger.go:52","msg":"[parse \"CURRENCY_URL=https://api.currencyapi.com/v3/latest?apikey=UCWkOsdA0u4AU4Bc3yaXotVYzdS5M19RuUS0JsQp&base_currency=IDR&currencies=USD\": first path segment in URL cannot contain colon]"}

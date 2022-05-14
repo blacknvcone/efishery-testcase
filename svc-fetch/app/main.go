@@ -8,7 +8,9 @@ import (
 	"github.com/blacknvcone/efishery-testcase/svc-fetch/common/config"
 	"github.com/blacknvcone/efishery-testcase/svc-fetch/common/logger"
 	"github.com/blacknvcone/efishery-testcase/svc-fetch/fetch/delivery/http"
-	"github.com/blacknvcone/efishery-testcase/svc-fetch/iam/usecase"
+	repoFetch "github.com/blacknvcone/efishery-testcase/svc-fetch/fetch/repository"
+	ucFetch "github.com/blacknvcone/efishery-testcase/svc-fetch/fetch/usecase"
+	ucIam "github.com/blacknvcone/efishery-testcase/svc-fetch/iam/usecase"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -29,18 +31,14 @@ func main() {
 	contextTimeout := time.Duration(10 * time.Second)
 
 	//Init IAM
-	iamUc := usecase.NewIAMUseCase(contextTimeout)
+	iamUc := ucIam.NewIAMUseCase(contextTimeout)
+
+	//Init Fetch
+	fetchRepo := repoFetch.NewFetchRepository()
+	fetchUc := ucFetch.NewFetchUseCase(fetchRepo, contextTimeout)
 
 	//Registering All Route Module
-	http.NewV1FetchHandler(router, iamUc, os.Getenv("JWT_SECRET"), logger)
-
-	// iamRepo := _iamRepo.NewMysqlIAMRepository(db)
-	// iamUseCase := _iamUseCase.NewIAMUseCase(iamRepo, contextTimeout)
-	// _iamDelivery.NewIAMHandler(router, iamUseCase, logger)
-
-	// prodRepo := _productRepo.NewMysqlProductRepository(db)
-	// prodUC := _productUseCase.NewProductUseCase(prodRepo, contextTimeout)
-	// _productDelivery.NewProductHandler(router, prodUC, iamUseCase, logger)
+	http.NewV1FetchHandler(router, iamUc, fetchUc, os.Getenv("JWT_SECRET"), logger)
 
 	router.Run(":" + os.Getenv("SERVER_PORT"))
 

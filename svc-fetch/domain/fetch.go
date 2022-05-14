@@ -1,5 +1,7 @@
 package domain
 
+import "context"
+
 type (
 	SteinDataRes struct {
 		UUID        string `json:"uuid"`
@@ -56,5 +58,10 @@ type (
 )
 
 type IFetchUseCase interface {
-	Ping() string
+	FetchAndCustom(ctx context.Context) ([]FetchRes, error)
+}
+
+type IFetchRepository interface {
+	GetSampleData() ([]SteinDataRes, error)
+	ConvertIDRtoUSD() (RestCurrencyRes, error)
 }

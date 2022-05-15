@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  svc-auth:
+    image: alpine:3.10
+    env_file:
+      - ./svc-auth/.env
+    ports:
+      - "3000:3000"
+    build:
+      context: ./svc-auth
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./svc-auth:/home/node/code
+
+  svc-fetch:
+    image: golang:1.17-alpine
+    env_file:
+      - ./svc-fetch/.env
+    ports:
+      - "9090:9090"
+    build:
+      context: ./svc-fetch
+      dockerfile: Dockerfile
+    restart: always

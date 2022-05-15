@@ -100,7 +100,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InvalidTokenResponse'
         403:
-          description: Insufficient access level !
+          description: Invalid Role!
           content:
             application/json:
               schema:
@@ -112,10 +112,7 @@ components:
       properties:
         message:
           type: string
-          example: Role not valid to access!
-        data:
-          type: string
-          example: null
+          example: Insufficient access level !
         success:
           type: boolean
           example: false

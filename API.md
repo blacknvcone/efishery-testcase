@@ -203,7 +203,7 @@ Authorization : Bearer {JWT_Token}
 ```json
 {
   "message": "Invalid Token!",
-  "data": null,
+  "success": false,
 }
 ```
 

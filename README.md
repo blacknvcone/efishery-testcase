@@ -4,6 +4,7 @@
 
 - [Getting Started](#getting_started)
 - [API Demo](#api-demo)
+- [API Markdown Docs](#api-markdown)
 - [Prerequisites](#prerequisites)
 - [Running](#reference)
 
@@ -24,6 +25,11 @@ These instructions will get you a copy of the project up and running on your loc
 >Fetch App  : [http://103.157.27.164:9090/](http://103.157.27.164:9090/)
 >
 >Fetch App Swagger  : [http://103.157.27.164:9090/swagger](http://103.157.27.164:9090/swagger)
+
+## API Markdown Docs <a name = "api-demo"></a>
+----------------------------
+
+>[API Docs](https://github.com/blacknvcone/efishery-testcase/blob/master/API.md)
 
 ## Prerequisites<a name = "prerequisites"></a>
 ----------------------------
@@ -57,4 +63,4 @@ What things you need to install the software.
     1. Just run command :
        "docker-compose up -d"
 ```
-//TODO: Create C4 Context and API.md
+//TODO: Create C4 Context

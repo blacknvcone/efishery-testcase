@@ -46,7 +46,7 @@ func (uc *iamUseCase) AuthorizationHTTP() gin.HandlerFunc {
 		if ts == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"success": false,
-				"message": "Unauthorized",
+				"message": "Invalid Token",
 			})
 			c.Abort()
 			return

@@ -7,9 +7,10 @@ import (
 
 	"github.com/blacknvcone/efishery-testcase/svc-fetch/common/config"
 	"github.com/blacknvcone/efishery-testcase/svc-fetch/common/logger"
-	"github.com/blacknvcone/efishery-testcase/svc-fetch/fetch/delivery/http"
+	fetchHttp "github.com/blacknvcone/efishery-testcase/svc-fetch/fetch/delivery/http"
 	repoFetch "github.com/blacknvcone/efishery-testcase/svc-fetch/fetch/repository"
 	ucFetch "github.com/blacknvcone/efishery-testcase/svc-fetch/fetch/usecase"
+	iamHttp "github.com/blacknvcone/efishery-testcase/svc-fetch/iam/delivery/http"
 	ucIam "github.com/blacknvcone/efishery-testcase/svc-fetch/iam/usecase"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -30,15 +31,16 @@ func main() {
 	router := gin.New()
 	contextTimeout := time.Duration(10 * time.Second)
 
-	//Init IAM
+	//Init IAM Module
 	iamUc := ucIam.NewIAMUseCase(contextTimeout)
 
-	//Init Fetch
+	//Init Fetch Module
 	fetchRepo := repoFetch.NewFetchRepository()
 	fetchUc := ucFetch.NewFetchUseCase(fetchRepo, contextTimeout)
 
 	//Registering All Route Module
-	http.NewV1FetchHandler(router, iamUc, fetchUc, os.Getenv("JWT_SECRET"), logger)
+	fetchHttp.NewV1FetchHandler(router, iamUc, fetchUc, os.Getenv("JWT_SECRET"), logger)
+	iamHttp.NewV1IamHandler(router, iamUc, os.Getenv("JWT_SECRET"), logger)
 
 	router.Run(":" + os.Getenv("SERVER_PORT"))
 

@@ -207,15 +207,6 @@ Authorization : Bearer {JWT_Token}
 }
 ```
 
-> HTTP 403 : Example Response
-```json
-{
-  "message": "Role not valid to access!",
-  "data": null,
-  "success": false
-}
-```
-
 ### Fetch
 `GET /v1/aggregate`
 

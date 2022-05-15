@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"time"
 
@@ -41,6 +42,15 @@ func main() {
 	//Registering All Route Module
 	fetchHttp.NewV1FetchHandler(router, iamUc, fetchUc, logger)
 	iamHttp.NewV1IamHandler(router, iamUc, logger)
+
+	//Embedding Swagger API Doc Route
+	router.StaticFile("/public/swagger", config.ProjectRootPath+"/swagger.yaml")
+	router.LoadHTMLFiles(config.ProjectRootPath + "/index.html")
+	router.GET("/swagger", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{
+			"title": "Main website",
+		})
+	})
 
 	router.Run(":" + os.Getenv("SERVER_PORT"))
 

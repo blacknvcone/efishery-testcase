@@ -1,0 +1,239 @@
+openapi: 3.0.1
+info:
+  title: Fetch App
+  version: 1.0.0
+  description: API Specs for Fetch App made with GO[gin-gonic] and documented with Swagger
+  contact:
+    name: Dani Prasetya
+    email: dani.prasetya.dev@gmail.com
+servers:
+  - url: http://localhost:9090
+    description: Local
+paths:
+  /v1/profile:
+    get:
+      security:
+        - Bearer: [ ]
+      summary: Get detail profile data resource from jwt claim payload
+      tags:
+        - Profile
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/ProfileResponse'
+        401:
+          description: Invalid Token!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidTokenResponse'
+  /v1/fetch:
+    get:
+      security:
+        - Bearer: [ ]
+      summary: Fetch Data
+      tags:
+        - Resource
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/FetchSuccessResponse'
+        401:
+          description: Invalid Token!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidTokenResponse'
+  /v1/aggregate:
+    get:
+      security:
+        - Bearer: [ ]
+      summary: Fetch Data
+      tags:
+        - Resource
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/AggregationSuccessResponse'
+        401:
+          description: Invalid Token!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidTokenResponse'
+        403:
+          description: Insufficient access level !
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRoleAccess'
+components:
+  schemas:
+    InvalidRoleAccess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Role not valid to access!
+        data:
+          type: string
+          example: null
+        success:
+          type: boolean
+          example: false
+    InvalidTokenResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid Token!
+        success:
+          type: boolean
+          example: false
+    ProfileResponse:
+      type: object
+      properties:
+        username:
+          type: string
+          example: astalavista
+        name:
+          type: string
+          example: John Travolta
+        phone:
+          type: string
+          example: '4522342134'
+        role:
+          type: string
+          example: admin
+        timestamp:
+          type: integer
+          example: 1646669672444
+        iat:
+          type: integer
+          example: 1646669672444
+        exp:
+          type: integer
+          example: 1646669672444
+    FetchSuccessResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          uuid:
+            type: string
+            example: 23-123-123-93f7-1234
+          komoditas:
+            type: string
+            example: Lele
+          area_provinsi:
+            type: string
+            example: JAWA TIMUR
+          area_kota:
+            type: string
+            example: MADIUN
+          size:
+            type: string
+            example: 120
+          price:
+            type: string
+            example: 200000
+          price_usd:
+            type: string
+            example: 12.12312
+          tgl_parsed:
+            type: string
+            example: 2022-03-08T19:15:42Z
+          timestamp:
+            type: string
+            example: null
+    AggregationSuccessResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          year:
+            type: integer
+            example: 2022
+          month:
+            type: integer
+            example: 3
+          week:
+            type: integer
+            example: 2
+          province:
+            type: string
+            example: JAWA TIMUR
+          total_data:
+            type: integer
+            example: 2
+          size:
+            type: object
+            properties:
+              max:
+                type: integer
+                example: 23
+              min:
+                type: integer
+                example: 2
+              med:
+                type: integer
+                example: 8
+              avg:
+                type: integer
+                example: 4
+          price:
+            type: object
+            properties:
+              max:
+                type: integer
+                example: 23
+              min:
+                type: integer
+                example: 2
+              med:
+                type: integer
+                example: 8
+              avg:
+                type: integer
+                example: 4
+    
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

@@ -50,15 +50,16 @@ type (
 	}
 
 	AggregationSize struct {
-		Maximal float64 `json:"maximal"`
-		Minimal float64 `json:"minimal"`
-		Median  float64 `json:"median"`
-		Average float64 `json:"average"`
+		Maximal float64 `json:"max"`
+		Minimal float64 `json:"min"`
+		Median  float64 `json:"med"`
+		Average float64 `json:"avg"`
 	}
 )
 
 type IFetchUseCase interface {
 	FetchAndCustom(ctx context.Context) ([]FetchRes, error)
+	SumAggregate(ctx context.Context) ([]AggregationRes, error)
 }
 
 type IFetchRepository interface {

@@ -5,6 +5,7 @@ go 1.17
 require github.com/gin-gonic/gin v1.7.7
 
 require (
+	github.com/montanaflynn/stats v0.6.6 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect

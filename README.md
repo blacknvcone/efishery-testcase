@@ -44,15 +44,6 @@ What things you need to install the software.
     3. See the output log
 ```
 
-### Auth-App [Container Based]
-```
-    1. Move current directory into svc-auth
-    2. Build image using command 
-       "docker build . -t svc-auth"
-    3. After build success, just run image with :
-       "docker run --name auth-app --publish 3000:3000 svc-auth"
-```
-
 ### Fetch-App [Run Localy]
 ```
     1. Move current directory into svc-fetch
@@ -61,12 +52,9 @@ What things you need to install the software.
     3. See the output log
 ```
 
-### Fetch-App [Container Based]
+### Running All Apps [Container Based]
 ```
-    1. Move current directory into svc-fetch
-    2. Build image using command 
-       "docker build . -t svc-fetch"
-    3. After build success, just run image with :
-       "docker run --name fetch-app --publish 9090:9090 svc-fetch"
+    1. Just run command :
+       "docker-compose up -d"
 ```
 //TODO: Create C4 Context and API.md

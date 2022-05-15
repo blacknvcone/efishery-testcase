@@ -12,7 +12,6 @@ type v1FetchHandler struct {
 	IAMUseCase   domain.IIamUseCase
 	FetchUseCase domain.IFetchUseCase
 	log          logger.LogInfoFormat
-	jwtSecret    string
 }
 
 func NewV1FetchHandler(router *gin.Engine, iamUseCase domain.IIamUseCase, fetchUseCase domain.IFetchUseCase, logger logger.LogInfoFormat) {

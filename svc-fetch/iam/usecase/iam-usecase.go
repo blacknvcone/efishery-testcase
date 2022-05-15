@@ -98,6 +98,7 @@ func (uc *iamUseCase) IsAdmin() gin.HandlerFunc {
 				if key.Interface() == "role" {
 					if value.Interface() == "super-admin" || value.Interface() == "admin" {
 						c.Next()
+						return
 					}
 					c.JSON(http.StatusForbidden, gin.H{
 						"success": false,

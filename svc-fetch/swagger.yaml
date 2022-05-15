@@ -7,6 +7,8 @@ info:
     name: Dani Prasetya
     email: dani.prasetya.dev@gmail.com
 servers:
+  - url: http://103.157.27.164:9090
+    description: Production
   - url: http://localhost:9090
     description: Local
 paths:

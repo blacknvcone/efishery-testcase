@@ -11,6 +11,10 @@
     },
     "servers": [
         {
+            "url": "http://103.157.27.164:3000",
+            "description": "Production"
+        },
+        {
             "url": "http://localhost:3000",
             "description": "Local"
         }

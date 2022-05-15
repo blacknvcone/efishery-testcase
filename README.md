@@ -7,6 +7,7 @@
 - [API Markdown Docs](#api-markdown)
 - [Prerequisites](#prerequisites)
 - [Running](#reference)
+- [C4 Model](#c4)
 
 
 
@@ -63,4 +64,10 @@ What things you need to install the software.
     1. Just run command :
        "docker-compose up -d"
 ```
-//TODO: Create C4 Context
+## C4 Model Documentation <a name = "C4"></a>
+----------------------------
+### Lv1 - Context
+![alt text](https://github.com/blacknvcone/efishery-testcase/blob/master/documentation/c4_lv1_context.drawio.png)
+
+### Lv2 - Deployment
+![alt text](https://github.com/blacknvcone/efishery-testcase/blob/master/documentation/c4_lv2_deployment.drawio.png)

@@ -28,6 +28,9 @@ func NewV1FetchHandler(router *gin.Engine, iamUseCase domain.IIamUseCase, fetchU
 	{
 		v1.GET("/ping", h.Ping)
 		v1.GET("/fetch", h.Fetch)
+
+		//Adding Sub Middleware IsAdmin
+		v1.Use(h.IAMUseCase.IsAdmin())
 		v1.GET("/aggregate", h.Aggregate)
 	}
 

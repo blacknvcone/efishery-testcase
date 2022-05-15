@@ -3,6 +3,7 @@ package usecase
 import (
 	"fmt"
 	"net/http"
+	"reflect"
 	"strings"
 	"time"
 
@@ -60,8 +61,8 @@ func (uc *iamUseCase) AuthorizationHTTP() gin.HandlerFunc {
 			claim, ok := token.Claims.(jwt.MapClaims)
 			if ok && token.Valid {
 				c.Set("claim", claim)
+				c.Next()
 				return
-
 			}
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"success": false,
@@ -74,8 +75,39 @@ func (uc *iamUseCase) AuthorizationHTTP() gin.HandlerFunc {
 	}
 }
 
-func (uc *iamUseCase) IsAdmin(jwt.MapClaims) bool {
-	//TODO : Create logic for validate jwt claim payload at field role
+func (uc *iamUseCase) IsAdmin() gin.HandlerFunc {
+	return func(c *gin.Context) {
 
-	return true
+		res, exist := c.Get("claim")
+		if !exist {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"success": false,
+				"message": "Invalid Session",
+				"data":    nil,
+			})
+			c.Abort()
+			return
+		}
+
+		// Parsing claim interface and Validate Role
+		v := reflect.ValueOf(res)
+		if v.Kind() == reflect.Map {
+			for _, key := range v.MapKeys() {
+				value := v.MapIndex(key)
+				//fmt.Println(key.Interface(), value.Interface())
+				if key.Interface() == "role" {
+					if value.Interface() == "super-admin" || value.Interface() == "admin" {
+						c.Next()
+					}
+					c.JSON(http.StatusForbidden, gin.H{
+						"success": false,
+						"message": "Insufficient access level !",
+					})
+					c.Abort()
+					return
+				}
+			}
+		}
+
+	}
 }

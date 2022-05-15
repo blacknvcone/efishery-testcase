@@ -22,6 +22,6 @@ type IAMSession struct {
 }
 
 type IIamUseCase interface {
-	AuthorizationHTTP(string) gin.HandlerFunc
+	AuthorizationHTTP() gin.HandlerFunc
 	IsAdmin(jwt.MapClaims) bool
 }

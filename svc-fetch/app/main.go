@@ -32,15 +32,15 @@ func main() {
 	contextTimeout := time.Duration(10 * time.Second)
 
 	//Init IAM Module
-	iamUc := ucIam.NewIAMUseCase(contextTimeout)
+	iamUc := ucIam.NewIAMUseCase(os.Getenv("JWT_SECRET"), contextTimeout)
 
 	//Init Fetch Module
 	fetchRepo := repoFetch.NewFetchRepository()
 	fetchUc := ucFetch.NewFetchUseCase(fetchRepo, contextTimeout)
 
 	//Registering All Route Module
-	fetchHttp.NewV1FetchHandler(router, iamUc, fetchUc, os.Getenv("JWT_SECRET"), logger)
-	iamHttp.NewV1IamHandler(router, iamUc, os.Getenv("JWT_SECRET"), logger)
+	fetchHttp.NewV1FetchHandler(router, iamUc, fetchUc, logger)
+	iamHttp.NewV1IamHandler(router, iamUc, logger)
 
 	router.Run(":" + os.Getenv("SERVER_PORT"))
 

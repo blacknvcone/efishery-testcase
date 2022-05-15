@@ -11,20 +11,18 @@ import (
 type v1IamHandler struct {
 	IAMUseCase domain.IIamUseCase
 	log        logger.LogInfoFormat
-	jwtSecret  string
 }
 
-func NewV1IamHandler(router *gin.Engine, iamUseCase domain.IIamUseCase, jwtSecret string, logger logger.LogInfoFormat) {
+func NewV1IamHandler(router *gin.Engine, iamUseCase domain.IIamUseCase, logger logger.LogInfoFormat) {
 
 	h := &v1IamHandler{
 		IAMUseCase: iamUseCase,
 		log:        logger,
-		jwtSecret:  jwtSecret,
 	}
 
 	//Implement JWT Middleware Here
 	v1 := router.Group("/v1")
-	v1.Use(h.IAMUseCase.AuthorizationHTTP(jwtSecret))
+	v1.Use(h.IAMUseCase.AuthorizationHTTP())
 	{
 		v1.GET("/profile", h.GetProfile)
 	}

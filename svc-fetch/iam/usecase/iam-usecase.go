@@ -13,11 +13,13 @@ import (
 
 type iamUseCase struct {
 	contextTimeout time.Duration
+	JWTSecret      string
 }
 
-func NewIAMUseCase(timeout time.Duration) domain.IIamUseCase {
+func NewIAMUseCase(jwtSecretKey string, timeout time.Duration) domain.IIamUseCase {
 	return &iamUseCase{
 		contextTimeout: timeout,
+		JWTSecret:      jwtSecretKey,
 	}
 }
 
@@ -35,7 +37,7 @@ func verifyToken(ts, secret string) (*jwt.Token, error) {
 	return token, nil
 }
 
-func (uc *iamUseCase) AuthorizationHTTP(secret string) gin.HandlerFunc {
+func (uc *iamUseCase) AuthorizationHTTP() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		//Retrieving Token
 		ts := c.Request.Header.Get("Authorization")
@@ -52,7 +54,7 @@ func (uc *iamUseCase) AuthorizationHTTP(secret string) gin.HandlerFunc {
 		tokenString := strings.Replace(ts, "Bearer ", "", -1)
 
 		//Verify
-		token, err := verifyToken(tokenString, secret)
+		token, err := verifyToken(tokenString, uc.JWTSecret)
 
 		if token != nil && err == nil {
 			claim, ok := token.Claims.(jwt.MapClaims)

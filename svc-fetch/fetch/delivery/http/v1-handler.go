@@ -15,18 +15,17 @@ type v1FetchHandler struct {
 	jwtSecret    string
 }
 
-func NewV1FetchHandler(router *gin.Engine, iamUseCase domain.IIamUseCase, fetchUseCase domain.IFetchUseCase, jwtSecret string, logger logger.LogInfoFormat) {
+func NewV1FetchHandler(router *gin.Engine, iamUseCase domain.IIamUseCase, fetchUseCase domain.IFetchUseCase, logger logger.LogInfoFormat) {
 
 	h := &v1FetchHandler{
 		IAMUseCase:   iamUseCase,
 		FetchUseCase: fetchUseCase,
 		log:          logger,
-		jwtSecret:    jwtSecret,
 	}
 
 	//Implement JWT Middleware Here
 	v1 := router.Group("/v1")
-	v1.Use(h.IAMUseCase.AuthorizationHTTP(jwtSecret))
+	v1.Use(h.IAMUseCase.AuthorizationHTTP())
 	{
 		v1.GET("/ping", h.Ping)
 		v1.GET("/fetch", h.Fetch)
